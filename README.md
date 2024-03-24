@@ -44,3 +44,11 @@ npm run web
 ~~~
 
 Nos abrirá automaticamente el navegador con nuestra app en funcionamiento.
+
+## Creación de ChangeLog
+
+Para generar el ChangeLog primero debemos definir la versión en el package.json, y posteriormente ejecutaremos el siguiente comando:
+
+~~~
+npm run changelog
+~~~
