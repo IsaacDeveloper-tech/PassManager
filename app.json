@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "PassManager",
-    "slug": "pass-manager",
-    "version": "0.0.1",
+    "slug": "PassManager",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
