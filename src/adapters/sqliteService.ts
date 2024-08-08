@@ -4,25 +4,17 @@ import { Manageable } from "../interfaces/Manageable/Manageable";
 
 export class SQLiteManager implements Manageable
 {
+    private dataBase: SQLite.SQLiteDatabase;
+
     public constructor(
-        private dataBase: SQLite.SQLiteDatabase
     )
     {
-        SQLite.openDatabaseAsync(bddConfig.name)
-        .then(openedDataBase => {
-            this.dataBase = openedDataBase;
-
-            return this.dataBase.execAsync(`
-                ${bddConfig.pragmaConfig}
-                ${bddConfig.initCommand}
-            `);
-        })
-        .then(response => {
-            // Executed OK
-        })
-        .catch(error => {
-            throw new Error();
-        });
+        this.dataBase = SQLite.openDatabaseSync(bddConfig.name);
+        
+        this.dataBase.execAsync(`
+            ${bddConfig.pragmaConfig}
+            ${bddConfig.initCommand}
+        `);
     }
 
     
