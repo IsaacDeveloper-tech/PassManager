@@ -22,6 +22,15 @@ export class UserDataManager{
         return this.dataUserManager.getDataById<User>(this.nameTable, userId)
     }
 
+    public getUserByNick(userNick:string):Promise<User|null>
+    {
+        return this.dataUserManager.getDataByParam<User>(
+            this.nameTable,
+            "name",
+            userNick
+        );
+    }
+
     /////////////////////////////////
     //// SETTERS of USERS TABLE /////
     /////////////////////////////////

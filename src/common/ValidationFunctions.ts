@@ -1,3 +1,6 @@
+import { User } from "../models/User";
+import { UserDataManager } from "../services/userService";
+
 export namespace ValidationFunctions{
 
     export function repeatPasswordValidation(password:string, repeatedPassword:string):boolean 
@@ -15,4 +18,17 @@ export namespace ValidationFunctions{
         return inputValue.match(format) !== null;
     }
 
+    export function userExist(
+        nickOfUser:string, 
+        userData:UserDataManager
+    ):Promise<boolean>
+    {
+        return userData.getUserByNick(nickOfUser)
+        .then(result => {
+            return result !== null;
+        })
+        .catch(e=>{
+            return true;
+        }); 
+    }
 }

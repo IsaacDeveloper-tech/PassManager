@@ -12,7 +12,6 @@ export class SQLiteManager implements Manageable
         this.dataBase = SQLite.openDatabaseSync(bddConfig.name);
         
         this.dataBase.execAsync(`
-            ${bddConfig.pragmaConfig}
             ${bddConfig.initCommand}
         `);
     }
@@ -43,11 +42,34 @@ export class SQLiteManager implements Manageable
         });
     }
 
+    public getByParam<T>(
+        nameTable:string, 
+        nameOfParam:string, 
+        value:string):Promise<T|null>
+    {
+        return this.dataBase.prepareAsync(
+            `
+            SELECT *
+            FROM ${nameTable}
+            WHERE ${nameOfParam} = '${value}';
+            `
+        )
+        .then((response: SQLite.SQLiteStatement) => {
+            return response.executeAsync<T>();
+        })
+        .then((response: SQLite.SQLiteExecuteAsyncResult<T>) => {
+            return response.getFirstAsync();
+        })
+        .catch(error => {
+            throw new Error();
+        }); 
+    }
+
     public setData<T>(nameTable:string, valuesOfData:string):Promise<boolean>
     {
         return this.dataBase.prepareAsync(
             `
-            INSERT INTO ${nameTable} VALUES ${valuesOfData};
+            INSERT INTO ${nameTable} VALUES (null,${valuesOfData});
             `
         )
         .then((response: SQLite.SQLiteStatement) => {
@@ -57,7 +79,8 @@ export class SQLiteManager implements Manageable
             return true;
         })
         .catch(error => {
-            throw new Error();
+            console.log(error);
+            return false;
         });
     }
 

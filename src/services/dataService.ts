@@ -20,6 +20,15 @@ export class DataManager{
         return this.dataManager.getById(nameTable, id);
     }
 
+    public getDataByParam<T>(
+        nameTable:string,
+        nameOfParam:string,
+        value:string
+    ):Promise<T|null>
+    {
+        return this.dataManager.getByParam(nameTable, nameOfParam, value);
+    }
+
     // Set data from DataBase
 
     public setData<T>(nameTable:string, data:Insertable):Promise<boolean>
@@ -50,17 +59,13 @@ export class DataManager{
         let textTypesOfColumns:string = "";
         const MAX:number = listOfString.length;
 
-        textTypesOfColumns += "(";
-
         for(let i:number = 0; i < MAX; i++)
         {
-            textTypesOfColumns += `${listOfString[i]}`;
+            textTypesOfColumns += `'${listOfString[i]}'`;
 
             if (i < MAX - 1)
                 textTypesOfColumns += ",";
         }
-
-        textTypesOfColumns += ")";
 
         return textTypesOfColumns;
     }

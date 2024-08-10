@@ -73,18 +73,16 @@ function RegisterPage()
                 title="Sign up" 
                 
                 onPress={
-                    userData !== undefined ?
-                    () => EventFunctions.onClickSignUp(
+                    (userData !== undefined) ?
+                    ()=>EventFunctions.onClickSignUp(
                         new User(
                             0, 
                             userNickInput, 
                             userPasswordInput, 
                             `${userNickInput}.pwds`
                         ),
-                        userData
-                    )
-                    :
-                    () => console.log("userData not defined")
+                        userData    
+                    ) : () => console.log("userData not defined")
                 }
             />
         </View>
