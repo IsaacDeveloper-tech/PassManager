@@ -1,21 +1,22 @@
-import { View, Button, TextInput } from "react-native";
+import { View, Button, TextInput, Text, Pressable } from "react-native";
 
 import { GeneralContext } from "../../contexts/GeneralContext";
 
 import { useState, useEffect, useContext } from "react";
-import { UserDataManager } from "../../services/userService";
 import { ValidationFunctions } from "../../common/ValidationFunctions";
 import { EventFunctions } from "../../common/EventFunctions";
-import { IGeneralContext } from "../../interfaces/contexts/IGeneralContext";
+import { IGeneralContext, UserState } from "../../interfaces/contexts/IGeneralContext";
+import { StackProps } from "../../components/Navigator/Navigator";
 
-function LoginPage()
+function LoginPage({ navigation }:StackProps)
 {
-    const generalContext:IGeneralContext|null = useContext(GeneralContext);
-    const userData:UserDataManager|undefined = generalContext?.userData;
+    const { userData }:IGeneralContext = useContext<IGeneralContext>(GeneralContext);
 
     const [nickNameInput, setNickNameInput] = useState<string>("");
     const [userPasswordInput, setUserPasswordInput] = useState<string>("");
     const [validated, setValidated] = useState<boolean>(false);
+
+    const { setUserIsLogged, setUserLogged }:UserState = useContext(GeneralContext).userState;
 
     useEffect(() => {
         setValidated(
@@ -43,17 +44,24 @@ function LoginPage()
             />
             
             <Button
-                disabled = {userData === undefined || !validated} 
+                disabled = {!validated} 
                 title="Sign up" 
                 onPress={
-                    userData !== undefined ?
                     () => {
-                        EventFunctions.onClickLogIn(nickNameInput, userPasswordInput, userData);
-                    } 
-                    :
-                    () => console.log("El gestor de usuarios no está disponible")
+                        EventFunctions.onClickLogIn(
+                            nickNameInput, 
+                            userPasswordInput, 
+                            userData,
+                            setUserLogged,
+                            setUserIsLogged
+                        );
+                    }
                 }
             />
+
+            <Pressable onTouchEnd={() => navigation.navigate("RegisterPage")}>
+                <Text>Go to Register page</Text>
+            </Pressable>
         
         </View>
     );

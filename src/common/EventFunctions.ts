@@ -27,7 +27,13 @@ export namespace EventFunctions
         });
     }
 
-    export function onClickLogIn(nickOfUser:string, passwordInput:string, userData:UserDataManager):void
+    export function onClickLogIn(
+        nickOfUser:string, 
+        passwordInput:string, 
+        userData:UserDataManager,
+        setUserIsLogged:React.Dispatch<React.SetStateAction<User | null>>, 
+        setUserLogged:React.Dispatch<React.SetStateAction<boolean>>
+    ):void
     {
         ValidationFunctions.userExist(nickOfUser, userData)
         .then((userExist:boolean) => {
@@ -36,18 +42,24 @@ export namespace EventFunctions
                 
             return userData.getUserByNick(nickOfUser);
         })
-        .then((userLogged:User|null) => {
+        .then((userLogged:User|null):[boolean, User] => {
             if (userLogged === null)
                 throw new Error("No se ha podido encontrar el usuario");
 
-            return ValidationFunctions.userLoggedWithCorrectPass(passwordInput, userLogged);
+            return [
+                ValidationFunctions.userLoggedWithCorrectPass(passwordInput, userLogged),
+                userLogged
+            ];
         })
-        .then((loggedCorrectly:boolean) => {
+        .then(([loggedCorrectly, userLogged]) => {
             if(!loggedCorrectly)
                 throw new Error("El usuario no se ha loggeado correctamente");
 
+            setUserIsLogged(userLogged);
+            setUserLogged(loggedCorrectly);
+            
             console.log("El usuario se ha loggeado correctamente");
-            })
+        })
         .catch(error => {
             console.log(error);
         })

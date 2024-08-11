@@ -1,6 +1,5 @@
-import { View, Button, TextInput, Pressable } from "react-native";
+import { View, Button, TextInput, Pressable, Text } from "react-native";
 
-import { UserDataManager } from "../../services/userService";
 import { IGeneralContext } from "../../interfaces/contexts/IGeneralContext";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { useContext, useState, useEffect } from "react";
@@ -9,11 +8,11 @@ import { EventFunctions } from "../../common/EventFunctions";
 import { ValidationFunctions } from "../../common/ValidationFunctions";
 
 import { User } from "../../models/User";
+import { StackProps } from "../../components/Navigator/Navigator";
 
-function RegisterPage()
+function RegisterPage({ navigation }:StackProps)
 {
-    const generalContext:IGeneralContext|null = useContext<IGeneralContext|null>(GeneralContext);
-    const userData:UserDataManager|undefined = generalContext?.userData;
+    const { userData }:IGeneralContext = useContext<IGeneralContext>(GeneralContext);
 
     const [ userNickInput, setUserNickInput ] = useState<string>("");
     const [ userPasswordInput, setUserPasswordInput ] = useState<string>("");
@@ -69,11 +68,10 @@ function RegisterPage()
                 }
             />
 
-            <Button disabled={(userData === undefined || !validated)}
+            <Button disabled={(!validated)}
                 title="Sign up" 
                 
                 onPress={
-                    (userData !== undefined) ?
                     ()=>EventFunctions.onClickSignUp(
                         new User(
                             0, 
@@ -82,9 +80,13 @@ function RegisterPage()
                             `${userNickInput}.pwds`
                         ),
                         userData    
-                    ) : () => console.log("userData not defined")
+                    )
                 }
             />
+
+            <Pressable onTouchEnd={() => navigation.navigate("LoginPage")}>
+                <Text>Go to LogIn page</Text>
+            </Pressable>
         </View>
     );
 }

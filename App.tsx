@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 // Views
-import { RegisterPage } from './src/views/RegisterPage/RegisterPage';
-import { LoginPage } from './src/views/LoginPage/LoginPage';
+import { Navigator } from './src/components/Navigator/Navigator';
 
 // Context Providers
 import { GeneralContextProvider } from './src/contexts/GeneralContext';
@@ -10,10 +10,9 @@ import { GeneralContextProvider } from './src/contexts/GeneralContext';
 export default function App() {
   return (
     <GeneralContextProvider>
-      <Text>hola</Text>
-      <Text>hola</Text>
-      <Text>hola</Text>
-      <LoginPage></LoginPage>
+      <NavigationContainer>
+        <Navigator />
+      </NavigationContainer>
     </GeneralContextProvider>
   );
 }
