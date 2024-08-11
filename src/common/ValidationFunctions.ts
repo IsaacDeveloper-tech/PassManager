@@ -31,4 +31,9 @@ export namespace ValidationFunctions{
             return true;
         }); 
     }
+
+    export function userLoggedWithCorrectPass(passwordInput:string, userOfDB:User):boolean
+    {
+        return userOfDB.password === passwordInput;
+    }
 }

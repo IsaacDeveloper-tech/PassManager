@@ -3,53 +3,11 @@ import { Updateable } from "../interfaces/Updateables/Updateables";
 
 export class User implements Insertable, Updateable {
     constructor(
-        private id:number,
-        private name:string,
-        private password:string,
-        private passwordFile:string
+        public id:number,
+        public name:string,
+        public password:string,
+        public passwordFile:string
     ){}
-
-    // getters
-    public get userId():number
-    {
-        return this.id;
-    }
-
-    public get userName():string
-    {
-        return this.name;
-    }
-
-    public get userPassword():string
-    {
-        return this.password;
-    }
-
-    public get userPasswordFile():string
-    {
-        return this.passwordFile;
-    }
-
-    // setters
-    public set userId(id:number)
-    {
-        this.id = id;
-    }
-
-    public set userName(name:string)
-    {
-        this.name = name;
-    }
-
-    public set userPassword(password:string)
-    {
-        this.password = password;
-    }
-
-    public set userPasswordFile(passwordFile:string)
-    {
-        this.passwordFile = passwordFile;
-    }
 
     // Interface implements
     public getColumnsOfDataObject(): string[] {
