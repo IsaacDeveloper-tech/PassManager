@@ -37,7 +37,8 @@ export class User implements Insertable, Updateable {
         const allColumnsWithValues:string[] = [];
 
         for (const [key, value] of Object.entries(this)) {
-            allColumnsWithValues.push(`${key}= ${value}`);
+            if(key !== "id")
+                allColumnsWithValues.push(`${key}= '${value}'`);
         }
 
         return allColumnsWithValues;

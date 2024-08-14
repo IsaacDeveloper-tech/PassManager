@@ -122,7 +122,8 @@ export class SQLiteManager implements Manageable
             return true;
         })
         .catch(error => {
-            throw new Error();
+            console.log(error);
+            return false;
         });
     }
 

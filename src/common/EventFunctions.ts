@@ -2,11 +2,44 @@ import { NativeSyntheticEvent, TextInputChangeEventData } from "react-native"
 import { User } from "../models/User";
 import { UserDataManager } from "../services/userService";
 import { ValidationFunctions } from "./ValidationFunctions";
+import { UserState } from "../interfaces/contexts/IGeneralContext";
 
 
 export namespace EventFunctions
 {
     // functions
+    export function onClickDeleteUser(userState:UserState, userData:UserDataManager):void
+    {
+        userData.deleteUser(userState.userLogged?.id ?? 0)
+        .then(operationOK => {
+            if(!operationOK)
+                throw new Error("Can't delete user");
+
+            onClickLogOut(userState);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
+    export function onClickLogOut(userState:UserState):void
+    {
+        userState.setUserLogged(null);
+        userState.setUserIsLogged(false);
+    }
+
+    export function onClickSaveChanges(id:number, userUpdated:User, userData:UserDataManager):Promise<boolean>
+    {
+        return userData.updateUser(id, userUpdated)
+        .then((operationOK) => {
+            return operationOK;
+        })
+        .catch(error => {
+            console.log(error);
+            return false;
+        })
+    }
+
     export function onClickSignUp(newUser:User, userData:UserDataManager):void
     {
         ValidationFunctions.userExist(newUser.name, userData)

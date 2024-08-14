@@ -3,9 +3,9 @@ import { UserDataManager } from "../services/userService";
 
 export namespace ValidationFunctions{
 
-    export function repeatPasswordValidation(password:string, repeatedPassword:string):boolean 
+    export function sameValuesValidation(value1:string, value2:string):boolean 
     {
-        return password === repeatedPassword;
+        return value1 === value2;
     }
 
     export function allInputsWithInfo(inputs:string[]):boolean

@@ -26,7 +26,7 @@ function RegisterPage({ navigation }:StackProps)
             ValidationFunctions.allInputsWithInfo(
                 [userNickInput, userPasswordInput, userRepeatedPassInput]
             ) 
-            && ValidationFunctions.repeatPasswordValidation(userPasswordInput, userRepeatedPassInput)
+            && ValidationFunctions.sameValuesValidation(userPasswordInput, userRepeatedPassInput)
         );
 
     }, [userNickInput, userPasswordInput, userRepeatedPassInput]);
