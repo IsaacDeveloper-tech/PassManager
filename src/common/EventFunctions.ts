@@ -61,20 +61,14 @@ export namespace EventFunctions
     }
 
     export function onClickLogIn(
-        nickOfUser:string, 
+        idUser:number,
         passwordInput:string, 
         userData:UserDataManager,
         setUserIsLogged:React.Dispatch<React.SetStateAction<User | null>>, 
         setUserLogged:React.Dispatch<React.SetStateAction<boolean>>
     ):void
     {
-        ValidationFunctions.userExist(nickOfUser, userData)
-        .then((userExist:boolean) => {
-            if(!userExist)
-                throw new Error("El usuario no existe");
-                
-            return userData.getUserByNick(nickOfUser);
-        })
+        userData.getUserById(idUser)
         .then((userLogged:User|null):[boolean, User] => {
             if (userLogged === null)
                 throw new Error("No se ha podido encontrar el usuario");

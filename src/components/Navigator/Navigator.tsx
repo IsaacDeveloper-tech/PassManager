@@ -5,6 +5,7 @@ import { LoginPage } from "../../views/LoginPage/LoginPage";
 import { RegisterPage } from "../../views/RegisterPage/RegisterPage";
 import { HomePage } from "../../views/HomePage/HomePage";
 import { UserConfigurationPage } from "../../views/UserConfigurationPage/UserConfigurationPage";
+import { UsersListPage } from "../../views/UsersListPage/UsersListPage";
 
 import { useContext } from "react";
 import { GeneralContext } from "../../contexts/GeneralContext";
@@ -12,7 +13,8 @@ import { IGeneralContext, UserState } from "../../interfaces/contexts/IGeneralCo
 
 type StackNavigation = {
     RegisterPage: undefined,
-    LoginPage: undefined
+    LoginPage: {id:number, name:string},
+    UsersListPage: undefined
 };
 
 export type StackProps = StackScreenProps<StackNavigation>;
@@ -25,7 +27,7 @@ function StackNavigator(){
         screenOptions={{
             headerShown: false
         }}
-        initialRouteName="LoginPage">
+        initialRouteName="UsersListPage">
             <stackNavigation.Screen
                 name="RegisterPage"
                 component={RegisterPage}
@@ -34,6 +36,12 @@ function StackNavigator(){
             <stackNavigation.Screen 
                 name="LoginPage"
                 component={LoginPage}
+                initialParams={{id: 0, name: ""}}
+            />
+
+            <stackNavigation.Screen 
+                name="UsersListPage"
+                component={ UsersListPage }
             />
         </stackNavigation.Navigator>
     );

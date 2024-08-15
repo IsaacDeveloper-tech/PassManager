@@ -19,7 +19,18 @@ export class SQLiteManager implements Manageable
     
     public getAll<T>(nameTable:string):Promise<T[]>
     {
-        return this.dataBase.getAllAsync<T>(nameTable);
+        return this.dataBase.prepareAsync(
+            `
+            SELECT *
+            FROM ${nameTable}
+            `
+        )
+        .then((response: SQLite.SQLiteStatement) => {
+            return response.executeAsync<T>();
+        })
+        .then((response: SQLite.SQLiteExecuteAsyncResult<T>) => {
+            return response.getAllAsync();
+        });
     }
 
     public getById<T>(nameTable:string, id:number):Promise<T|null>

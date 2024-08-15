@@ -84,8 +84,8 @@ function RegisterPage({ navigation }:StackProps)
                 }
             />
 
-            <Pressable onTouchEnd={() => navigation.navigate("LoginPage")}>
-                <Text>Go to LogIn page</Text>
+            <Pressable onTouchEnd={() => navigation.goBack()}>
+                <Text>Go Back</Text>
             </Pressable>
         </View>
     );

@@ -8,11 +8,11 @@ import { EventFunctions } from "../../common/EventFunctions";
 import { IGeneralContext, UserState } from "../../interfaces/contexts/IGeneralContext";
 import { StackProps } from "../../components/Navigator/Navigator";
 
-function LoginPage({ navigation }:StackProps)
+function LoginPage({ navigation, route }:StackProps)
 {
     const { userData }:IGeneralContext = useContext<IGeneralContext>(GeneralContext);
 
-    const [nickNameInput, setNickNameInput] = useState<string>("");
+    const [nickNameInput, setNickNameInput] = useState<string>(route.params?.name ?? "");
     const [userPasswordInput, setUserPasswordInput] = useState<string>("");
     const [validated, setValidated] = useState<boolean>(false);
 
@@ -49,7 +49,7 @@ function LoginPage({ navigation }:StackProps)
                 onPress={
                     () => {
                         EventFunctions.onClickLogIn(
-                            nickNameInput, 
+                            route.params?.id ?? 0, 
                             userPasswordInput, 
                             userData,
                             setUserLogged,
@@ -59,8 +59,8 @@ function LoginPage({ navigation }:StackProps)
                 }
             />
 
-            <Pressable onTouchEnd={() => navigation.navigate("RegisterPage")}>
-                <Text>Go to Register page</Text>
+            <Pressable onTouchEnd={() => navigation.goBack()}>
+                <Text>Go back</Text>
             </Pressable>
         
         </View>
