@@ -11,6 +11,8 @@ import { useContext } from "react";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { IGeneralContext, UserState } from "../../interfaces/contexts/IGeneralContext";
 
+import { useTheme } from "react-native-paper";
+
 type StackNavigation = {
     RegisterPage: undefined,
     LoginPage: {id:number, name:string},
@@ -22,10 +24,13 @@ export type StackProps = StackScreenProps<StackNavigation>;
 function StackNavigator(){
     const stackNavigation = createStackNavigator<StackNavigation>();
 
+    const theme = useTheme();
+
     return(
         <stackNavigation.Navigator 
         screenOptions={{
-            headerShown: false
+            headerShown: false,
+            headerTintColor: theme.colors.onBackground
         }}
         initialRouteName="UsersListPage">
             <stackNavigation.Screen
@@ -57,8 +62,24 @@ export type DrawerProps = DrawerScreenProps<DrawerNavigation>;
 function DrawerNavigator(){
     const drawerNavigation = createDrawerNavigator<DrawerNavigation>();
 
+    const theme = useTheme();
+
     return(
-        <drawerNavigation.Navigator initialRouteName="Home">
+        <drawerNavigation.Navigator 
+        initialRouteName="Home"
+        screenOptions={{
+            headerStyle:{
+                backgroundColor: theme.colors.secondary,
+                shadowColor: theme.colors.shadow
+            },
+            drawerStyle:{
+                backgroundColor: theme.colors.secondary,
+                shadowColor: theme.colors.shadow
+            },
+            sceneContainerStyle: {
+                backgroundColor: theme.colors.background,
+            }
+        }}>
             <drawerNavigation.Screen
                 name="Home"
                 component={HomePage}

@@ -4,6 +4,7 @@ import { User } from "../../models/User";
 export interface IGeneralContext{
     userState       : UserState
     userData        : UserDataManager;
+    setDarkMode     : React.Dispatch<React.SetStateAction<boolean>>
 };
 
 export interface UserState{
