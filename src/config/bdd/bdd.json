@@ -1,0 +1,4 @@
+{
+    "name": "PassManagerDataBase",
+    "initCommand": "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL, password TEXT NOT NULL, passwordfile TEXT NOT NULL);"
+}
