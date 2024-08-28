@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
-import { View, TextInput, Button, Text } from "react-native";
+import { View } from "react-native";
+import { TextInput, Button, Text, Divider } from "react-native-paper";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { EventFunctions } from "../../common/EventFunctions";
 import { ValidationFunctions } from "../../common/ValidationFunctions";
@@ -58,9 +59,11 @@ export function UserConfigurationPage()
 
     return(
         <View>
-            <Text>{ userState.userLogged?.name ?? "No Name" }</Text>
+            <Text variant="displaySmall">{ userState.userLogged?.name ?? "No Name" }</Text>
             <TextInput 
                 placeholder="New nick name" 
+                mode="outlined"
+                label="New Nick"
                 value={ newNickName }
                 onChange={
                     (event) => EventFunctions.onChangeValueOfInput(event, setNewNickName)
@@ -70,6 +73,8 @@ export function UserConfigurationPage()
             <Text>Password</Text>
             <TextInput
                 placeholder="Password"
+                label="Password"
+                mode="outlined"
                 secureTextEntry={true}
                 value={ passwordUser } 
                 onChange={
@@ -78,6 +83,8 @@ export function UserConfigurationPage()
             />
             <TextInput 
                 placeholder="New password"
+                label="New Password"
+                mode="outlined"
                 secureTextEntry={true}
                 value={ newPaswordUser }
                 onChange={
@@ -86,14 +93,18 @@ export function UserConfigurationPage()
             />
 
             <Button
-                title="Save changes"
                 disabled = {!validated}
                 onPress={createUserUpdated}
-            />
+                mode="elevated"
+            >
+                <Text>Save changes</Text>
+            </Button>
 
             <Text>Other Actions</Text>
             <TextInput
                 placeholder="Password for other actions"
+                label="Password"
+                mode="outlined"
                 secureTextEntry={true}
                 value={ passwordOtherActions } 
                 onChange={
@@ -103,14 +114,17 @@ export function UserConfigurationPage()
 
             <Button
                 disabled = {!validatedOtherActions}
-                title="Delete User"
+                mode="elevated"
                 onPress={() => EventFunctions.onClickDeleteUser(userState, userData)} 
-            />
+            >
+                <Text>Delete User</Text>
+            </Button>
 
             <Button 
-                title="Log Out"
                 onPress={() => EventFunctions.onClickLogOut(userState)}
-            />
+            >
+                <Text>Log Out</Text>
+            </Button>
         </View>
     );
 }
