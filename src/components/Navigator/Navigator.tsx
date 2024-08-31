@@ -29,8 +29,12 @@ function StackNavigator(){
     return(
         <stackNavigation.Navigator 
         screenOptions={{
-            headerShown: false,
-            headerTintColor: theme.colors.onBackground
+            //headerShown: false,
+            headerTintColor: theme.colors.onBackground,
+            headerStyle:{
+                backgroundColor: theme.colors.background,
+            },
+            headerShadowVisible: true
         }}
         initialRouteName="UsersListPage">
             <stackNavigation.Screen
